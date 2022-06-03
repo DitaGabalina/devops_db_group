@@ -1,6 +1,8 @@
 # devops_db_group
 DevOps kursa lielā mājasdarba pirmkods, DB grupa
 
+Skat. wiki
+
 # Realizējamās komponentes
 Serveri (EC2 Instances):
 - Web servers

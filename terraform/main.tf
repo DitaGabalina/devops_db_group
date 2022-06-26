@@ -1,87 +1,30 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.20.0"
-    }
-  }
+module "devops_db_group-vpc"{
+    source = "./modules/vpc"
+    region=var.region
+    vpc_cidr=var.vpc-cidr
+    environment=var.env
+    public_subnets_cidr = var.public_subnets_cidr
+    availability_zones = var.availability_zones
 }
 
-provider "aws" {
-  profile = "default"
-  region  = var.region
+module "apache-ec2"{
+    source = "./modules/ec2/apache"
+    region=var.region
+    instance_type = var.instance_type
+    vpcid = module.devops_db_group-vpc.vpc_id
+    vpc_security_group_idsc = module.devops_db_group-vpc.security_groups_ids
+    subnet_id = module.devops_db_group-vpc.public_subnets_id[0]
+    aws_private_key = var.aws-private-key-location
+    aws-keypair-name = var.aws-access-key-name
 }
 
-
-resource "aws_security_group" "cassandra-secgroup" {
-  name        = "cassandra-secgroup"
-  description = "Allow inbound / outbond traffic"
-
-  ingress {
-    description = "HTTPS from Internet"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    description = "HTTP from Internet"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    description = "SSH from Internet"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-
-
-
-}
-
-resource "aws_instance" "cassandra_app_server" {
-  ami                    = var.ami
-  instance_type          = var.instance_type
-  key_name               = "eu_north-1-ansible-master-key"
-  user_data              = file("app-server-init-script.sh")
-  vpc_security_group_ids = [aws_security_group.cassandra-secgroup.id]
-  tags = {
-    Name = "cassandra_app_server"
-  }
-}
-
-resource "aws_instance" "cassandra_db_node_1" {
-  ami                    = var.ami
-  instance_type          = var.instance_type
-  key_name               = "eu_north-1-ansible-master-key"
-  user_data              = file("db-node-init-script.sh")
-  vpc_security_group_ids = [aws_security_group.cassandra-secgroup.id]
-  tags = {
-    Name = "cassandra_db_node_1"
-  }
-}
-
-resource "aws_instance" "cassandra_db_node_2" {
-  ami                    = var.ami
-  instance_type          = var.instance_type
-  key_name               = "eu_north-1-ansible-master-key"
-  user_data              = file("db-node-init-script.sh")
-  vpc_security_group_ids = [aws_security_group.cassandra-secgroup.id]
-  tags = {
-    Name = "cassandra_db_node_2"
-  }
+module "cassandra-ec2"{
+    source = "./modules/ec2/cassandra"
+    region=var.region
+    instance_type = var.instance_type
+    vpcid = module.devops_db_group-vpc.vpc_id
+    vpc_security_group_idsc = module.devops_db_group-vpc.security_groups_ids
+    subnet_id = module.devops_db_group-vpc.public_subnets_id[0]
+    aws_private_key = var.aws-private-key-location
+    aws-keypair-name = var.aws-access-key-name
 }

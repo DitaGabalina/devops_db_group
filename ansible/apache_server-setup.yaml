@@ -1,5 +1,5 @@
 ---
-- hosts: master
+- hosts: localhost
   become: yes
   tasks: 
     - name: Install Apache
@@ -13,4 +13,4 @@
     - name: Install Php
       package:
         name: php
-      state: present
+        state: present

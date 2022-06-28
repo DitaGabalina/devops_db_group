@@ -45,10 +45,10 @@ provisioner "remote-exec" {
       "sudo apt-add-repository ppa:ansible/ansible -y",
       "sudo apt update -y",
       "sudo apt install ansible -y",
-      "sudo mv /etc/ansible/hosts /etc/ansible/hosts.bak",
+      /* "sudo mv /etc/ansible/hosts /etc/ansible/hosts.bak", */
       /* "sudo mv /tmp/hosts /etc/ansible/hosts", */
       "mkdir ~/ansible-codes",
-      "printf '[master]\n127.0.0.1\n' | sudo tee --append /etc/ansible/hosts",
+      /* "printf '[master]\n127.0.0.1\n' | sudo tee --append /etc/ansible/hosts", */
       "git clone -b feature/7-ansible-for-ubuntu-update https://github.com/DitaGabalina/devops_db_group.git ~/ansible-codes/devops_db_group",
       "ansible-playbook ~/ansible-codes/devops_db_group/ansible/apache_server-setup.yaml --ssh-common-args='-o StrictHostKeyChecking=accept-new'"
     ]

@@ -43,7 +43,7 @@ provisioner "remote-exec" {
     inline = [
       "sudo chmod 400 ~/.ssh/id_rsa",
       "sudo apt-add-repository ppa:ansible/ansible -y",
-      "sudo apt update -y",
+      "sudo apt update -y & DEBIAN_FRONTEND=noninteractive apt-get -y upgrade",
       "sudo apt install ansible -y",
       "mkdir ~/ansible-codes",
       "git clone -b feature/7-ansible-for-ubuntu-update https://github.com/DitaGabalina/devops_db_group.git ~/ansible-codes/devops_db_group",

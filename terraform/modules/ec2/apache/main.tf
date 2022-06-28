@@ -25,4 +25,39 @@ resource "aws_instance" "apache_server" {
   tags = {
     Name = "apache_server"
   }
+
+
+provisioner "file" {
+source = "./assets/secrets/secret-key.pem"
+destination = "/home/ubuntu/.ssh/id_rsa"
+
+ connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("${var.aws_private_key}")
+      host        = self.public_dns
+    }
+
+}
+provisioner "remote-exec" {
+    inline = [
+      "sudo chmod 400 ~/.ssh/id_rsa",
+      "sudo apt-add-repository ppa:ansible/ansible -y",
+      "sudo apt update -y",
+      "sudo apt install ansible -y",
+      "sudo mv /etc/ansible/hosts /etc/ansible/hosts.bak",
+      /* "sudo mv /tmp/hosts /etc/ansible/hosts", */
+      "mkdir ~/ansible-codes",
+      "printf '[master]\n127.0.0.1\n' | sudo tee --append /etc/ansible/hosts",
+      "git clone -b feature/7-ansible-for-ubuntu-update https://github.com/DitaGabalina/devops_db_group.git ~/ansible-codes/devops_db_group",
+      "ansible-playbook ~/ansible-codes/devops_db_group/ansible/apache_server-setup.yaml --ssh-common-args='-o StrictHostKeyChecking=accept-new'"
+    ]
+
+  connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("${var.aws_private_key}")
+      host        = self.public_dns
+    }
+  }
 }

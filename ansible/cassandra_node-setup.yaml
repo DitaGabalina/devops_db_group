@@ -2,7 +2,7 @@
 - hosts:
     - cassandra_nodes
   become: true
-  tasks: 
+  tasks:
     - name: Update and upgrade apt packages
       apt:
         upgrade: yes
@@ -11,21 +11,24 @@
       package:
         name: mc
         state: latest
+
     - name: Install openjdk-11-jre-headless
-      service:
+      package:
          name: openjdk-11-jre-headless
          state: present
+
     - name: Install apt-transport-https
       package:
         name: apt-transport-https
         state: present
-    - name: Add cassandra debian repository
-      apt_repository: repo='deb http://www.apache.org/dist/cassandra/debian 40x main'
-    - name: Add the key for the cassandra debian repo
-      apt_key: keyserver=pgp.mit.edu id=F758CE318D77295D
 
     - name: Add another key for cassandra
-      apt_key: keyserver=pgp.mit.edu id=2B5C1B00
+      apt_key:
+        url: https://www.apache.org/dist/cassandra/KEYS
+        state: present
+
+    - name: Add cassandra debian repository
+      apt_repository: repo='deb http://www.apache.org/dist/cassandra/debian 40x main'
 
     - name: Install cassandra
       package:

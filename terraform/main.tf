@@ -16,6 +16,8 @@ module "apache-ec2"{
     subnet_id = module.devops_db_group-vpc.public_subnets_id[0]
     aws_private_key = var.aws-private-key-location
     aws-keypair-name = var.aws-access-key-name
+    apache-ec2-depends_on = [module.cassandra-ec2.inventorycreate]
+
 }
 
 module "cassandra-ec2"{

@@ -31,3 +31,4 @@ override.tf.json
 .DS_Store
 terraform/.terraform.lock.hcl
 terraform/assets/secrets/*
+.vscode/settings.json

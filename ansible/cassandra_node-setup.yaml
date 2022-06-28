@@ -21,7 +21,6 @@
         state: present
     - name: Add cassandra debian repository
       apt_repository: repo='deb http://www.apache.org/dist/cassandra/debian 40x main'
-      state: present
     - name: Add the key for the cassandra debian repo
       apt_key: keyserver=pgp.mit.edu id=F758CE318D77295D
 

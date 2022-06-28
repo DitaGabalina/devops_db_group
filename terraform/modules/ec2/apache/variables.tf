@@ -35,3 +35,7 @@ variable "aws_private_key"{
 variable "aws-keypair-name"{
     description = "AWS key pair name used for connecting to instances"
 }
+
+variable "apache-ec2-depends_on" {
+    description = "Apache Ec2 dependancy"
+}

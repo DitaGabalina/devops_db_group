@@ -22,7 +22,7 @@
         name: apt-transport-https
         state: present
 
-    - name: Add another key for cassandra
+    - name: Add Key for cassandra repo
       apt_key:
         url: https://www.apache.org/dist/cassandra/KEYS
         state: present

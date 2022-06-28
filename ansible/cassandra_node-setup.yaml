@@ -3,6 +3,10 @@
     - cassandra_nodes
   become: true
   tasks: 
+    - name: Update and upgrade apt packages
+      apt:
+      upgrade: yes
+      update_cache: yes
     - name: Install MC
       package:
         name: mc

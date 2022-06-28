@@ -28,8 +28,7 @@ resource "aws_instance" "cassandra_db_node_1" {
   }
   provisioner "remote-exec" {
     inline = [
-      "sudo echo \"${file("./assets/secrets/public-key.pub")}\" >> .ssh/authorized_keys",
-      "sudo apt update -y && sudo DEBIAN_FRONTEND=noninteractive apt-get -y upgrade"
+      "sudo echo \"${file("./assets/secrets/public-key.pub")}\" >> .ssh/authorized_keys"
     ]
 
   connection {
@@ -52,7 +51,7 @@ resource "aws_instance" "cassandra_db_node_2" {
   }
   provisioner "remote-exec" {
     inline = [
-      "sudo echo \"${file("./assets/secrets/public-key.pub")}\" >> .ssh/authorized_keys",
+      "sudo echo \"${file("./assets/secrets/public-key.pub")}\" >> .ssh/authorized_keys"
     ]
 
   connection {

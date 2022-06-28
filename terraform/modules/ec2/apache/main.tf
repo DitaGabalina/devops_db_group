@@ -56,7 +56,7 @@ provisioner "remote-exec" {
     inline = [
       "sudo chmod 400 ~/.ssh/id_rsa",
       "sudo apt-add-repository ppa:ansible/ansible -y",
-      "sudo apt update -y && sudo DEBIAN_FRONTEND=noninteractive apt-get -y upgrade",
+      "sudo apt update -y",
       "sudo apt install ansible -y",
       "sudo mv /etc/ansible/hosts /etc/ansible/hosts.bak",
       "sudo mv /tmp/hosts /etc/ansible/hosts",

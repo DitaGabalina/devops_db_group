@@ -37,3 +37,19 @@
 
     - name: make sure cassandra is started
       service: name=cassandra state=restarted
+
+    - name: Set JAVA_HOME
+      lineinfile:
+        dest: /etc/environment
+        state: present
+        regexp: '^JAVA_HOME'
+        line: 'JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64'
+ 
+    - name: JAVA_HOME ielasisana
+      shell: printf $JAVA_HOME
+      register: output
+
+    - name: JAVA_HOME Parbaude
+      debug:
+        msg: "JAVA_HOME Veiksmigi registrets"
+      when: output.stdout is match ("/usr/lib/jvm/java-11-openjdk-amd64")

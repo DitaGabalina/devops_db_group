@@ -63,7 +63,8 @@ provisioner "remote-exec" {
       "mkdir ~/ansible-codes",
       "git clone -b development https://github.com/DitaGabalina/devops_db_group.git ~/ansible-codes/devops_db_group",
       "ansible-playbook ~/ansible-codes/devops_db_group/ansible/apache_server-setup.yaml --ssh-common-args='-o StrictHostKeyChecking=accept-new'",
-      "ansible-playbook ~/ansible-codes/devops_db_group/ansible/cassandra_node-setup.yaml --ssh-common-args='-o StrictHostKeyChecking=accept-new'"
+      "ansible-playbook ~/ansible-codes/devops_db_group/ansible/cassandra_node-setup.yaml --ssh-common-args='-o StrictHostKeyChecking=accept-new'",
+      "ansible-playbook ~/ansible-codes/devops_db_group/ansible/cassandra_main_node-data_load.yaml"
     ]
 
   connection {

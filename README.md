@@ -6,7 +6,7 @@ Skat. wiki
 
 ## Realizējamās komponentes
 
-Serveri (EC2 Instances):
+Serveri (EC2 t3.small Instances):
 
 - Web servers
 

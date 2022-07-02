@@ -4,6 +4,7 @@ module "devops_db_group-vpc"{
     vpc_cidr=var.vpc-cidr
     environment=var.env
     public_subnets_cidr = var.public_subnets_cidr
+    private_subnets_cidr = var.private_subnets_cidr
     availability_zones = var.availability_zones
 }
 
@@ -26,7 +27,7 @@ module "cassandra-ec2"{
     instance_type = var.instance_type
     vpcid = module.devops_db_group-vpc.vpc_id
     vpc_security_group_idsc = module.devops_db_group-vpc.security_groups_ids
-    subnet_id = module.devops_db_group-vpc.public_subnets_id[0]
+    subnet_id = module.devops_db_group-vpc.private_subnets_id[0]
     aws_private_key = var.aws-private-key-location
     aws-keypair-name = var.aws-access-key-name
 }

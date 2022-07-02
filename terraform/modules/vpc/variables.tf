@@ -10,7 +10,10 @@ variable "public_subnets_cidr" {
   type        = list
   description = "VPC public subnets"
 }
-
+variable "private_subnets_cidr" {
+  type        = list
+  description = "VPC private subnets"
+}
 variable "region" {
   description = "AWS region to work with"
 }

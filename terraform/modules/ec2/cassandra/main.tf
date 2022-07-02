@@ -26,18 +26,7 @@ resource "aws_instance" "cassandra_db_node_1" {
   tags = {
     Name = "cassandra_db_node_1"
   }
-  provisioner "remote-exec" {
-    inline = [
-      "sudo echo \"${file("./assets/secrets/public-key.pub")}\" >> .ssh/authorized_keys"
-    ]
-
-  connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = file("${var.aws_private_key}")
-      host        = self.public_dns
-    }
-  }
+    user_data = "${file("./assets/secrets/install-ssh_key.sh")}"
 }
 
 resource "aws_instance" "cassandra_db_node_2" {
@@ -49,25 +38,14 @@ resource "aws_instance" "cassandra_db_node_2" {
   tags = {
     Name = "cassandra_db_node_2"
   }
-  provisioner "remote-exec" {
-    inline = [
-      "sudo echo \"${file("./assets/secrets/public-key.pub")}\" >> .ssh/authorized_keys"
-    ]
-
-  connection {
-      type        = "ssh"
-      user        = "ubuntu"
-      private_key = file("${var.aws_private_key}")
-      host        = self.public_dns
-    }
-  }
+    user_data = "${file("./assets/secrets/install-ssh_key.sh")}"
 }
 
 resource "local_file" "hosts_cfg" {
   content = templatefile("./assets/templates/hosts.tpl",
     {
-      cassandra_node1 = aws_instance.cassandra_db_node_1.public_dns
-      cassandra_node2 = aws_instance.cassandra_db_node_2.public_dns
+      cassandra_node1 = aws_instance.cassandra_db_node_1.private_ip
+      cassandra_node2 = aws_instance.cassandra_db_node_2.private_ip
     }
   )
   filename = "./assets/inventory/hosts.cfg"

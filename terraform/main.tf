@@ -1,3 +1,7 @@
+terraform {
+  required_version = "~> 1.2.3"
+}
+
 module "devops_db_group-vpc"{
     source = "./modules/vpc"
     region=var.region

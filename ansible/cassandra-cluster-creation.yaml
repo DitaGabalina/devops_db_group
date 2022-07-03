@@ -14,5 +14,13 @@
       become: true
       service: name=cassandra state=restarted
 
-    - name: Start repairing and syncing nodes manually
+    - name: Pause for 1 minutes to wait for Cassandra service
+      pause:
+        minutes: 1
+
+- hosts: 
+  - cassandra_main_node
+
+  tasks:
+    - name: Launch nodetool repair
       shell: nodetool repair

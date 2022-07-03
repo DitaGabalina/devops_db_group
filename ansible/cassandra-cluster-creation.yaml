@@ -13,3 +13,6 @@
     - name: make sure cassandra is restarted
       become: true
       service: name=cassandra state=restarted
+
+    - name: Start repairing and syncing nodes manually
+      shell: nodetool repair

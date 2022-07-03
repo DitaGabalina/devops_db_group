@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  become: true
+  tasks:
+    - name: Update and upgrade apt packages
+      apt:
+        upgrade: yes
+        update_cache: yes
+    - name: Install Apache
+      package:
+        name: apache2
+        state: latest
+    - name: Start theApache service
+      service:
+         name: apache2
+         state: started 
+    - name: Install Php
+      package:
+        name: php
+        state: present

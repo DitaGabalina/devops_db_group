@@ -29,3 +29,7 @@ override.tf.json
 # example: *tfplan*
 
 .DS_Store
+terraform/.terraform.lock.hcl
+terraform/assets/secrets/*
+.vscode/settings.json
+terraform/assets/inventory/hosts.cfg

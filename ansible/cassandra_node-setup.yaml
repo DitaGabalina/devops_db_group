@@ -1,0 +1,55 @@
+---
+- hosts:
+    - cassandra_nodes
+  become: true
+  tasks:
+    - name: Update and upgrade apt packages
+      apt:
+        upgrade: yes
+        update_cache: yes
+    - name: Install MC
+      package:
+        name: mc
+        state: latest
+
+    - name: Install openjdk-11-jre-headless
+      package:
+         name: openjdk-11-jre-headless
+         state: present
+
+    - name: Install apt-transport-https
+      package:
+        name: apt-transport-https
+        state: present
+
+    - name: Add Key for cassandra repo
+      apt_key:
+        url: https://www.apache.org/dist/cassandra/KEYS
+        state: present
+
+    - name: Add cassandra debian repository
+      apt_repository: repo='deb http://www.apache.org/dist/cassandra/debian 40x main'
+
+    - name: Install cassandra
+      package:
+        name: cassandra
+        state: present
+
+    - name: make sure cassandra is started
+      service: name=cassandra state=restarted
+
+    - name: Set JAVA_HOME
+      lineinfile:
+        dest: /etc/environment
+        state: present
+        regexp: '^JAVA_HOME'
+        line: 'JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64'
+ 
+    - name: JAVA_HOME ielasisana
+      shell: printf $JAVA_HOME
+      register: output
+
+    - name: JAVA_HOME Parbaude
+      debug:
+        msg: "JAVA_HOME Veiksmigi registrets"
+      when: output.stdout is match ("/usr/lib/jvm/java-11-openjdk-amd64")

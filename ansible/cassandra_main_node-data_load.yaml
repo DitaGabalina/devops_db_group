@@ -1,0 +1,28 @@
+---
+- hosts:
+    - cassandra_main_node
+  tasks:
+    - name: Create External_data dir
+      file:
+        path: ~/external_data
+        state: directory
+    - name: Download devops_db_group from the GitRepo
+      git:
+        repo: 'https://github.com/DitaGabalina/devops_db_group.git'
+        dest: "~/devops_db_group/"
+        version: development
+        force: yes
+
+    - name: Download UR Data
+      shell: chmod +x ~/devops_db_group/data_load/download_ur_data.sh && ~/devops_db_group/data_load/download_ur_data.sh
+    
+    - name: Create Data Model
+      shell: cqlsh -f ~/devops_db_group/data_load/create_cassandra_data_model.cql
+      args:
+        chdir: ~/external_data
+        
+    - name: Copy to cassandra
+      shell: cqlsh -f ~/devops_db_group/data_load/copy_to_cassandra.cql
+      ignore_errors: yes
+      args:
+        chdir: ~/external_data    

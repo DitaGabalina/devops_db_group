@@ -4,7 +4,7 @@
 
   tasks:
     - name: Create List of Ip addresses to be added to cassandra.yaml
-      set_fact: seeds="{{ groups['cassandra_nodes'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join(',') }}"
+      set_fact: seeds="{{ groups['cassandra_main_node'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join(',') }}"
 
     - name: override cassandra.yaml file with one created from template
       become: true

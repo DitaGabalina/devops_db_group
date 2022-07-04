@@ -22,7 +22,7 @@ Serveri (EC2 t3.small Instances):
 
 ## Izmitināšana
 
-Komponentes izveido ar Terraform iekš AWS mākoņa. Lai konfigurētu terraform izmantošanu Jūsu projakta vajadzībām, jāveic tā konfigurēšana, 
+Komponentes izveido ar Terraform iekš AWS mākoņa. Lai konfigurētu terraform izmantošanu Jūsu projekta vajadzībām, jāveic tā konfigurēšana, 
 * norādot jūsu AWS atslēgu, reģionu un pieejamības zonas datnē terraform.tfvars. Iespējams pielāgot arī izveiojamo instanču veidu.
 * ģenerējot ssh atslēgas un to ielādēšanas skriptu
 

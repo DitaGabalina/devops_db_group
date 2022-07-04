@@ -2,7 +2,7 @@
 
 DevOps kursa lielā mājasdarba pirmkods, DB grupa
 
-Skat. wiki
+Skat. [wiki](https://github.com/DitaGabalina/devops_db_group/wiki)
 
 ## Realizējamās komponentes
 
